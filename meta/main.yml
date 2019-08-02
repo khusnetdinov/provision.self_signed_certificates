@@ -1,0 +1,21 @@
+---
+
+galaxy_info:
+  author: Marat Khustnetdinov
+  description: Ansible role creates self signed certificates
+  galaxy_tags:
+    - ssl
+    - self signed certificates
+    - certificates
+    - nginx
+    - user
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  categories:
+  - system
+  license: MIT
+  min_ansible_version: 1.8
+
+dependencies: []

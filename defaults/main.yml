@@ -1,0 +1,5 @@
+---
+
+provision_certificates_path: /etc/nginx/ssl
+provision_certificate_passphrase: private_key_passphrase
+provision_certificate_domain: 0.0.0.0

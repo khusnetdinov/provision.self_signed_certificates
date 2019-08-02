@@ -1,0 +1,38 @@
+---
+
+- name: "Create Nginx Self Signed Certificates Dir"
+  file:
+    path: "{{ provision_certificates_path }}"
+    state: directory
+
+- name: "Ensure OpenSSL dependencies are installed"
+  pip:
+    name: setuptools
+    state: present
+
+- name: "Ensure OpenSSL dependencies are installed"
+  pip:
+    name: pyOpenSSL
+    state: present
+
+- name: "Generate the private key file to sign the CSR"
+  openssl_privatekey:
+    path: "{{ provision_certificates_path }}/self.pem"
+    passphrase: "{{ provision_certificate_passphrase }}"
+    cipher: aes256
+
+- name: "Generate the CSR file signed with the private key"
+  openssl_csr:
+    path: "{{ provision_certificates_path }}/self.csr"
+    privatekey_path: "{{ provision_certificates_path }}/self.pem"
+    privatekey_passphrase: "{{ provision_certificate_passphrase }}"
+    common_name: "{{ provision_certificate_domain }}"
+
+- name: "Sign the CSR file as a CA to turn it into a certificate"
+  openssl_certificate:
+    path: "{{ provision_certificates_path }}/self.crt"
+    csr_path: "{{ provision_certificates_path }}/self.csr"
+    privatekey_path: "{{ provision_certificates_path }}/self.pem"
+    privatekey_passphrase: "{{ provision_certificate_passphrase }}"
+    provider: selfsigned
+    force: yes

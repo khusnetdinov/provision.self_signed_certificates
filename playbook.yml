@@ -1,0 +1,9 @@
+---
+
+- hosts: provision
+  vars_files:
+    - defaults/main.yml
+  gather_facts: false
+  remote_user: root
+  tasks:
+    - import_tasks: tasks/main.yml
